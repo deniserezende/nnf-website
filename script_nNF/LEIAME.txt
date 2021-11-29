@@ -1,0 +1,30 @@
+- Para rodar o script pelo terminal ou command prompt ou PowerShell navegue até a localização do script:
+cd [caminho da PASTA que contém o script]
+
+- Para conseguir o caminho da pasta que contém o script:
+Arraste a pasta para o terminal ou command prompt ou PowerShell
+
+- Depois
+1. Se estiver utilizando um Mac digite no terminal:
+	python3 nNF_script.py -p [caminho do zip file]
+
+2. Se estiver utilizando um Windows digite no command prompt ou PowerShell:
+	python nNF_script.py -p [caminho do zip file]
+
+
+- Para conseguir o caminho do zip file:
+Arraste o arquivo zip para o terminal ou command prompt ou PowerShell
+
+- Exemplos:
+1. No Mac:
+	python3 nNF_script.py -p /Users/Denise/Downloads/xml_nfe_2021-11-04-16-08-19.907684\ \(1\).zip
+	python3 nNF_script.py -p "/Users/Downloads/xml_nfe_2021-11-04-16-08-19.907684 (1)"
+
+2. No Windows PowerShell:
+	python nNF_script.py -p "C:\Users\denise\Downloads\xml_nfe_2021-11-05-21-23-04.017995.zip (1)"
+	python nNF_script.py -p C:\Users\denise\Downloads\xml_nfe_2021-11-05-21-23-04.017995.zip
+
+3. No Windows Command Prompt
+	python nNF_script.py -p "C:\Users\denise\Downloads\xml_nfe_2021-11-05-21-23-04.017995.zip (1)"
+	python nNF_script.py -p C:\Users\denise\Downloads\xml_nfe_2021-11-05-21-23-04.017995.zip
+
