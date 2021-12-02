@@ -42,6 +42,7 @@ else:
     sys.exit()
 
 amount_of_not_xml_files = 0
+amount_of_xml_files_not_well_formed = 0
 nNF_numbers_list = []
 for file in folder_files:
     full_filename = file
@@ -53,10 +54,16 @@ for file in folder_files:
         logging.warning(f'\tFILENAME:{full_filename}')
         continue
 
-    tree = ET.parse(full_filename)
-    root = tree.getroot()
-    # Getting the xml http used to scale down the tree
-    xml_http = root.tag[:-len('nfeProc')]
+    try:
+        tree = ET.parse(full_filename)
+        root = tree.getroot()
+        # Getting the xml http used to scale down the tree
+        xml_http = root.tag[:-len('nfeProc')]
+    except:
+        logging.error('xml file not well-formed.')
+        logging.warning(f'\tFILENAME:{full_filename}')
+        amount_of_xml_files_not_well_formed += 1
+        continue
 
     # Scaling down the tree NFe - infNFe - ide - nNF
     NFe = root.find(xml_http + 'NFe')
@@ -108,6 +115,7 @@ amount_invalid_xml = amount_of_xml_files - amount_valid_xml
 logging.warning(f'\tAmount of xml files: {amount_of_xml_files}')
 logging.warning(f'\tAmount of valid xml files: {amount_valid_xml}')
 logging.warning(f'\tAmount of invalid xml files: {amount_invalid_xml}')
+logging.warning(f'\tAmount of xml files not well-formed: {amount_of_xml_files_not_well_formed}')
 
 print(f'\n\nTempo de execução:\t{str(end - start)}')
 print(f'\n\nPrimeira nota fiscal: {smallest_nNF}')
