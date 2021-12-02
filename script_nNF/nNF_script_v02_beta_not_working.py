@@ -66,23 +66,6 @@ for file in folder_files:
         xml_http = root.tag[:-len('nfeProc')]
     except:
         logging.error('xml file not well-formed!!!!!!!.')
-
-        # Copying the file to another one
-        filename = os.path.basename(full_filename)
-        destination_path = os.path.join(folder_path_not_well_formed, filename)
-
-        # Read in the file
-        with open(full_filename, 'r') as file :
-          filedata = file.read()
-
-        # Replace the target string
-        # filedata = filedata.replace('ram', 'abcd')
-
-        # Write the file out again
-        destination_file = open(destination_path, 'w')
-        destination_file.write(filedata)
-        destination_file.close()
-        logging.error('\n\n\ndone?\n\n\n')  
         continue
 
 
