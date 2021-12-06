@@ -107,6 +107,8 @@ if nNF_numbers_list:
             for missing_nNF in range(nNF_numbers_list[count - 1] + 1, current_nNF_number):
                 missing_nNF_numbers_list.append(missing_nNF)
 
+print(nNF_numbers_list)
+
 end = datetime.datetime.now()
 
 amount_of_xml_files = len(folder_files)

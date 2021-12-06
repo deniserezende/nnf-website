@@ -58,29 +58,17 @@ for filename in folder_files:
 
     # Read in the file
     try:
-        file = open(full_filename, 'r', encoding='utf-8')
-        logging.warning('Opened.')     
+        file = open(full_filename, 'r', encoding='iso-8859-1')
         filedata = file.read()
-        logging.warning('Red.')     
 
         # Copying the file to another one
         filename_stripped = os.path.basename(full_filename)
         destination_path = os.path.join(folder_path_not_well_formed, filename_stripped)
-        logging.warning('Path.')     
-
-        # Replace the target string
-        filedata = filedata.replace(b'\x0c', b'')
-        logging.warning('replace.')     
 
         # Write the file out again
-        destination_file = open(destination_path, 'w')
-        logging.warning('open2.')     
-
+        destination_file = open(destination_path, 'w', encoding='utf-8')
         destination_file.write(filedata)
-        logging.warning('write.')     
-
         destination_file.close()
-        logging.warning('close.')     
 
     except:
         logging.warning('Problem.')
