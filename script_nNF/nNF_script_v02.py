@@ -3,7 +3,6 @@ import os
 import datetime
 import logging
 import zipfile
-import glob
 import change_xml_encoding
 import nNF_script_functions
 
@@ -31,19 +30,15 @@ logging.info(f"Folder Path = [{folder_path}]")
 with zipfile.ZipFile(zip_path, 'r') as zip_ref:
     zip_ref.extractall(folder_path)
 
+# Checking if the folder was created
 if os.path.exists(folder_path):
-    # Searching for file in directories recursively
-    # and then creating a list of all the filenames that ends with .xml
-    folder_files = glob.glob(folder_path + "/**/*.xml", recursive=True)
-    logging.info(f"Folder path search = [{folder_files}]")
-
-    # Going to the folder with all the xml files
-    os.chdir(folder_path)
-    logging.info(f"Current Path = [{os.getcwd()}]")
+    # Getting all xml files inside all subdirectories
+    folder_files = nNF_script_functions.recursively_searching_subdirectories_for_xml_files(folder_path)
 else:
     logging.error('\tFolder path does not exist.')
     logging.error(f'\tPath={folder_path}')
     sys.exit()
+
 
 amount_of_not_xml_files = 0
 amount_of_xml_files_not_well_formed_unfixed = 0
@@ -59,12 +54,12 @@ for file in folder_files:
         continue
 
     # Trying to parse the file
-    tree = nNF_script_functions.parse_xml_file(full_filename, tree)
+    tree = nNF_script_functions.parse_xml_file(full_filename)
     if tree is None:
         # Changing the file encoding from iso-8859-1 to utf-8
         change_xml_encoding.convert_xml_iso_8859_1_to_xml_utf_8(full_filename)
         # Calling the parser again
-        tree = nNF_script_functions.parse_xml_file(full_filename, tree)
+        tree = nNF_script_functions.parse_xml_file(full_filename)
 
         if tree is None:
             # If tree still equals None than the file can't be fixed
@@ -105,7 +100,7 @@ amount_invalid_xml = amount_of_xml_files - amount_valid_xml
 logging.warning(f'\tAmount of xml files: {amount_of_xml_files}')
 logging.warning(f'\tAmount of valid xml files: {amount_valid_xml}')
 logging.warning(f'\tAmount of invalid xml files: {amount_invalid_xml}')
-logging.info(f'\tAmount of unfixed xml files that were not well-formed: {amount_of_xml_files_not_well_formed_unfixed}')
+logging.warning(f'\tAmount of unfixed xml files that were not well-formed: {amount_of_xml_files_not_well_formed_unfixed}')
 
 print(f'\n\nTempo de execução:\t{str(end - start)}')
 print(f'\n\nPrimeira nota fiscal: {smallest_nNF}')

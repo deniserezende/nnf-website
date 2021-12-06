@@ -1,14 +1,30 @@
 import xml.etree.ElementTree as ET
 import logging
+import glob
+import os
 
 
-def parse_xml_file(full_filename, tree):
+def recursively_searching_subdirectories_for_xml_files(directory_path):
+    if os.path.exists(directory_path):
+        # Searching for file in directories recursively
+        # and then creating a list of all the filenames that ends with .xml
+        xml_files = glob.glob(directory_path + "/**/*.xml", recursive=True)
+        logging.info(f"Folder path search = [{xml_files}]")
+        return xml_files
+    else:
+        logging.error('\trecursively_searching_subdirectories_for_xml_files: Directory does not exist.')
+        logging.error(f'\trecursively_searching_subdirectories_for_xml_files: Path={directory_path}')
+        return None
+
+
+
+def parse_xml_file(full_filename):
     # Trying to parse the file
     try:
         tree = ET.parse(full_filename)
         return tree
     # If failed to parse the file
-    except NameError:
+    except:
         # Report
         logging.warning('\tparse_xml_file: xml file not well-formed.')
         logging.warning(f'\tFILENAME:{full_filename}')

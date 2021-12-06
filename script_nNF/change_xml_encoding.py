@@ -20,6 +20,6 @@ def convert_xml_iso_8859_1_to_xml_utf_8(full_filename):
         destination_file.write(file_data)
         destination_file.close()
 
-    except:
+    except UnicodeDecodeError:
         logging.warning('\tconvert_xml_iso_8859_1_to_xml_utf_8: problem.')
         logging.warning(f'\tFILENAME:{full_filename}')
